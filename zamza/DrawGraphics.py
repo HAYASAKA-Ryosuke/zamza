@@ -14,4 +14,3 @@ class ICdraw(object):
 class Import(object):
     def __init__(self):
         pass
-
