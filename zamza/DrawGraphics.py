@@ -18,9 +18,13 @@ class ICdraw:
         self.font = ImageFont.truetype(os.path.dirname(__file__) + "/../font/ipaexg.ttf", size=16)
         self.widthmargin = self.leftmargin + self.rightmargin
         self.heightmargin = self.topmargin + self.bottommargin
+        self.toppinpos = []
+        self.rightpinpos = []
+        self.leftpinpos = []
+        self.bottompinpos = []
 
     def name(self, name):
-        self.icname[name] = {"width": self.width, "height": self.height, "toppin": self.topictext, "leftpin": self.leftictext, "rightpin": self.rightictext, "bottompin": self.bottomictext}
+        self.icname[name] = {"width": self.width, "height": self.height, "toppin": self.topictext, "leftpin": self.leftictext, "rightpin": self.rightictext, "bottompin": self.bottomictext, "toppinpos": self.toppinpos, "leftpinpos": self.leftpinpos, "rightpinpos": self.rightpinpos, "bottompinpos": self.bottompinpos}
 
     def __contour(self, x, y, width, height, color='black'):
         self.drawline.line(((x, y), (x, y+height), (x+width, y+height), (x+width, y), (x, y)), fill=color, width=2)
@@ -33,31 +37,39 @@ class ICdraw:
         fontsize = self.fontsize
         self.__contour(x=x, y=y, width=self.width, height=self.height)
         for i, text in enumerate(self.topictext):
-            self.drawline.text((x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y), str(text), font=self.font)
+            pos = (x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y)
+            self.drawline.text(pos, str(text), font=self.font)
+            self.toppinpos.append(pos)
         for i, text in enumerate(self.leftictext):
-            self.drawline.text((x, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2), str(text), font=self.font)
+            pos = (x, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2)
+            self.drawline.text(pos, str(text), font=self.font)
+            self.leftpinpos.append(pos)
         for i, text in enumerate(self.bottomictext):
-            self.drawline.text((x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y+self.height-self.bottommargin//2), str(text), font=self.font)
+            pos = (x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y+self.height-self.bottommargin//2)
+            self.drawline.text(pos, str(text), font=self.font)
+            self.bottompinpos.append(pos)
         for i, text in enumerate(self.rightictext):
-            self.drawline.text((x+self.width-self.rightmargin//2, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2), str(text), font=self.font)
+            pos = (x+self.width-self.rightmargin//2, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2)
+            self.drawline.text(pos, str(text), font=self.font)
+            self.rightpinpos.append(pos)
 
     def getpinpos(self, icname, pinname):
         if pinname in self.icname[icname]["toppin"]:
             for i, name in enumerate(self.icname[icname]["toppin"]):
                 if pinname == name:
-                    return ("top", i)
+                    return ("top", i, self.icname[icname]["toppinpos"][i])
         if pinname in self.icname[icname]["leftpin"]:
             for i, name in enumerate(self.icname[icname]["leftpin"]):
                 if pinname == name:
-                    return ("left", i)
+                    return ("left", i, self.icname[icname]["leftpinpos"][i])
         if pinname in self.icname[icname]["bottompin"]:
             for i, name in enumerate(self.icname[icname]["bottompin"]):
                 if pinname == name:
-                    return ("bottom", i)
+                    return ("bottom", i, self.icname[icname]["bottompinpos"][i])
         if pinname in self.icname[icname]["rightpin"]:
             for i, name in enumerate(self.icname[icname]["rightpin"]):
                 if pinname == name:
-                    return ("right", i)
+                    return ("right", i, self.icname[icname]["rightpinpos"][i])
 
     def text(self, top, left, bottom, right):
         self.topictext = top

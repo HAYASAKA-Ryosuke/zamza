@@ -6,18 +6,6 @@ sys.path.append('zamza')
 import DrawGraphics
 import unittest
 
-#x = 3
-#y = 3
-#width = 100
-#height = 100
-#ic = DrawGraphics.ICdraw()
-##ic.draw(x,y,width,height)
-#ic.pin()
-#ic.contour(x, y, width, height)
-#
-#ic.show()
-
-
 
 class testDrawGraphics(unittest.TestCase):
     def setUp(self):
@@ -46,9 +34,9 @@ class testDrawGraphics(unittest.TestCase):
         self.ic.show()
 
     def test_getpinpos(self):
-        self.assertEqual(("top", 1), self.ic.getpinpos("IC2", "p2"))
-        self.assertEqual(("left", 2), self.ic.getpinpos("IC2", "p12"))
-        self.assertEqual(("right", 3), self.ic.getpinpos("IC2", "p29"))
-        self.assertEqual(("bottom", 4), self.ic.getpinpos("IC2", "p22"))
+        self.assertEqual(("top", 1, (366, 300)), self.ic.getpinpos("IC2", "p2"))
+        self.assertEqual(("left", 2, (10, 82)), self.ic.getpinpos("IC2", "p12"))
+        self.assertEqual(("right", 3, (70, 108)), self.ic.getpinpos("IC2", "p29"))
+        self.assertEqual(("bottom", 4, (444, 538)), self.ic.getpinpos("IC2", "p22"))
 
 unittest.main()
