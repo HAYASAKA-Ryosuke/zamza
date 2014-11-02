@@ -10,9 +10,10 @@ class testLineDraw(unittest.TestCase):
         self.linedraw = LineDraw.LineDraw()
 
     def testgridnum(self):
-        self.assertEqual(self.linedraw.gridnumlist(10,20),[10,20])
-        self.assertEqual(self.linedraw.gridnumlist(10,30),[10,20,30])
-        self.assertEqual(self.linedraw.gridnumlist(10,100),[10,20,30,40,50,60,70,80,90,100])
+        self.assertEqual(self.linedraw.gridnumlist([10,20],[30,30]),[[(10, 20), (20, 20), (30, 20)], [(10, 30), (20, 30), (30, 30)]])
+        self.assertEqual(self.linedraw.gridnumlist([10,10],[20,30]),[[(10, 10), (20, 10)], [(10, 20), (20, 20)], [(10, 30), (20, 30)]])
+        self.assertEqual(self.linedraw.gridnumlist([30,10],[10,20]),[[(10,10),(20,10),(30,10)],[(10,20),(20,20),(30,20)]])
+        self.assertEqual(self.linedraw.gridnumlist([10,30],[30,20]),[[(10,20),(20,20),(30,20)],[(10,30),(20,30),(30,30)]])
 
 
 
