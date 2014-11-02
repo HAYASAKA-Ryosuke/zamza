@@ -1,6 +1,7 @@
 #!coding:utf-8
 from PIL import ImageDraw, Image, ImageFont
 import math
+import networkx
 
 class LineDraw(object):
     def __init__(self):
@@ -9,6 +10,30 @@ class LineDraw(object):
         self.starty = None
         self.stopx = None
         self.stopy = None
+        self.nx = networkx
+        self.graph = self.nx.DiGraph()
+
+    def gridgraph(self, start=[], stop=[]):
+        gridlist = self.gridnumlist(start,stop)
+        first = 0
+        xlast = len(gridlist[0])-1
+        ylast = len(gridlist)-1
+        for i in range(0,len(gridlist)):
+            for j in range(0,len(gridlist[0])):
+                self.graph.add_node(gridlist[i][j])
+                if i == first:
+                    if j < xlast:
+                        self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
+                    self.graph.add_edge(gridlist[i][j], gridlist[i+1][j],weight=1)
+                elif i == ylast:
+                    if j < xlast:
+                        self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
+                else:
+                    self.graph.add_edge(gridlist[i][j], gridlist[i+1][j],weight=1)
+                    self.graph.add_edge(gridlist[i][j], gridlist[i-1][j],weight=1)
+                    self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
+                    self.graph.add_edge(gridlist[i][j], gridlist[i][j-1],weight=1)
+        return [p for p in self.nx.all_shortest_paths(self.graph,tuple(start),tuple(stop))]
 
     def _gridnum(self,xsmall,ysmall,xlarge,ylarge):
         res = []

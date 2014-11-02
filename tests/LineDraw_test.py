@@ -15,6 +15,9 @@ class testLineDraw(unittest.TestCase):
         self.assertEqual(self.linedraw.gridnumlist([30,10],[10,20]),[[(10,10),(20,10),(30,10)],[(10,20),(20,20),(30,20)]])
         self.assertEqual(self.linedraw.gridnumlist([10,30],[30,20]),[[(10,20),(20,20),(30,20)],[(10,30),(20,30),(30,30)]])
 
+    def testgridgraph(self):
+        print(self.linedraw.gridgraph([10,20],[30,30]))
+
 
 
 if __name__ == '__main__':
