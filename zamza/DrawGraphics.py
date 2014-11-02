@@ -8,7 +8,7 @@ import LineDraw
 class draw(ICDraw.ICdraw, LineDraw.Linedraw):
     def __init__(self):
         self.icname = {}
-        self.im = Image.new('RGBA', (480, 780), (128, 128, 128, 0))
+        self.im = Image.new('RGBA', (780, 780), (128, 128, 128, 0))
         self.drawline = ImageDraw.Draw(self.im)
         self.font = ImageFont.truetype(os.path.dirname(__file__) + "/../font/ipaexg.ttf", size=16)
         self.widthmargin = self.leftmargin + self.rightmargin
