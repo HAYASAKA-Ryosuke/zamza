@@ -11,10 +11,16 @@ class LineDraw(object):
         self.stopy = None
 
     def gridnumlist(self, start, stop):
+        res = []
         if start <= stop:
-            return [start+(val*self.space) for val in range(1, self.__gridseparatenum(stop-start))]
+            res.append(start)
+            res.extend([start+(val*self.space) for val in range(1, self.__gridseparatenum(stop-start))])
+            res.append(stop)
         else:
-            return [stop-(val*self.space) for val in range(1, self.__gridseparatenum(start-stop))]
+            res.append(stop)
+            res.extend([stop-(val*self.space) for val in range(1, self.__gridseparatenum(start-stop))])
+            res.append(start)
+        return res
 
 
     def __gridseparatenum(self, pixel):
