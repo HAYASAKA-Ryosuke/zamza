@@ -2,9 +2,10 @@
 from PIL import ImageDraw, Image, ImageFont
 import os
 import ICDraw
+import LineDraw
 
 
-class draw(ICDraw.ICdraw):
+class draw(ICDraw.ICdraw, LineDraw.Linedraw):
     def __init__(self):
         self.icname = {}
         self.im = Image.new('RGBA', (480, 780), (128, 128, 128, 0))
@@ -16,6 +17,7 @@ class draw(ICDraw.ICdraw):
         self.rightpinpos = []
         self.leftpinpos = []
         self.bottompinpos = []
+        LineDraw.Linedraw.__init__(self)
 
 
     def show(self):

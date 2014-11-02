@@ -31,12 +31,18 @@ class testDrawGraphics(unittest.TestCase):
                 )
         self.ic.ICname("IC2")
         self.ic.ICdraw(x, y)
-        self.ic.show()
 
     def test_getpinpos(self):
-        self.assertEqual(("top", 1, (366, 300)), self.ic.ICgetpinpos("IC2", "p2"))
-        self.assertEqual(("left", 2, (10, 82)), self.ic.ICgetpinpos("IC2", "p12"))
-        self.assertEqual(("right", 3, (70, 108)), self.ic.ICgetpinpos("IC2", "p29"))
-        self.assertEqual(("bottom", 4, (444, 538)), self.ic.ICgetpinpos("IC2", "p22"))
+        self.assertEqual(("top", 1, (360, 300)), self.ic.ICgetpinpos("IC2", "p2"))
+        self.assertEqual(("left", 2, (10, 70)), self.ic.ICgetpinpos("IC2", "p12"))
+        self.assertEqual(("right", 3, (70, 90)), self.ic.ICgetpinpos("IC2", "p29"))
+        self.assertEqual(("bottom", 4, (420, 490)), self.ic.ICgetpinpos("IC2", "p22"))
+
+    def test_LineDraw(self):
+        print(self.ic.ICgetpinpos("IC1", "p2")[2])
+        print(self.ic.ICgetpinpos("IC2", "p2")[2])
+        print(self.ic.gridgraph(self.ic.ICgetpinpos("IC1", "p2")[2], self.ic.ICgetpinpos("IC2", "p2")[2]))
+        self.ic.linedraw(self.ic.gridgraph(self.ic.ICgetpinpos("IC1", "p2")[2], self.ic.ICgetpinpos("IC2", "p2")[2])[0])
+        self.ic.show()
 
 unittest.main()

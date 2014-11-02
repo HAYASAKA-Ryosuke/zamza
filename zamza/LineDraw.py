@@ -1,9 +1,9 @@
 #!coding:utf-8
 from PIL import ImageDraw, Image, ImageFont
-import math
 import networkx
 
-class LineDraw(object):
+
+class Linedraw(object):
     def __init__(self):
         self.space = 10
         self.startx = None
@@ -12,6 +12,9 @@ class LineDraw(object):
         self.stopy = None
         self.nx = networkx
         self.graph = self.nx.DiGraph()
+
+    def linedraw(self, linelist):
+        self.drawline.line(linelist)
 
     def gridgraph(self, start=[], stop=[]):
         gridlist = self.gridnumlist(start,stop)
@@ -29,9 +32,11 @@ class LineDraw(object):
                     if j < xlast:
                         self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
                 else:
-                    self.graph.add_edge(gridlist[i][j], gridlist[i+1][j],weight=1)
+                    if i < ylast:
+                        self.graph.add_edge(gridlist[i][j], gridlist[i+1][j],weight=1)
                     self.graph.add_edge(gridlist[i][j], gridlist[i-1][j],weight=1)
-                    self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
+                    if j < xlast:
+                        self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
                     self.graph.add_edge(gridlist[i][j], gridlist[i][j-1],weight=1)
         return [p for p in self.nx.all_shortest_paths(self.graph,tuple(start),tuple(stop))]
 

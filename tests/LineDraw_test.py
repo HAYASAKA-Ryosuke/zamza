@@ -7,7 +7,7 @@ import LineDraw
 
 class testLineDraw(unittest.TestCase):
     def setUp(self):
-        self.linedraw = LineDraw.LineDraw()
+        self.linedraw = LineDraw.Linedraw()
 
     def testgridnum(self):
         self.assertEqual(self.linedraw.gridnumlist([10,20],[30,30]),[[(10, 20), (20, 20), (30, 20)], [(10, 30), (20, 30), (30, 30)]])
@@ -16,7 +16,8 @@ class testLineDraw(unittest.TestCase):
         self.assertEqual(self.linedraw.gridnumlist([10,30],[30,20]),[[(10,20),(20,20),(30,20)],[(10,30),(20,30),(30,30)]])
 
     def testgridgraph(self):
-        print(self.linedraw.gridgraph([10,20],[30,30]))
+        print(self.linedraw.gridgraph([10, 20], [30, 30]))
+        print(self.linedraw.gridgraph([10, 50], [360, 300]))
 
 
 

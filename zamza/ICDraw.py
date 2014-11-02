@@ -6,7 +6,7 @@ class ICdraw:
     leftmargin = 40
     rightmargin = 40
     pinmargin = 10
-    fontsize = 16
+    fontsize = 10
 
     def __init__(self):
         pass
