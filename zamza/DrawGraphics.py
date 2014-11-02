@@ -81,6 +81,3 @@ class ICdraw:
         self.im.show()
 
 
-class Import(object):
-    def __init__(self):
-        pass
