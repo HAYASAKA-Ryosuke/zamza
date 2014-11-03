@@ -9,8 +9,8 @@ import unittest
 
 class testDrawGraphics(unittest.TestCase):
     def setUp(self):
-        x = 10
-        y = 10
+        x = 50
+        y = 50
         self.ic = DrawGraphics.draw()
         self.ic.ICpin(top=0, left=8, bottom=0, right=8)
         self.ic.ICtext(top=[],
