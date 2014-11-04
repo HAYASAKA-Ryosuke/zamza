@@ -1,19 +1,41 @@
 #!coding:utf-8
 import ply.lex as lex
 
-tokens = (
-        'STRING',
-        'WIRE',
-        'DOT',
-        'NUMBER',
-        'LEFTPAREN',
-        'RIGHTPAREN',
-        )
+reserved = {
+    'import': 'IMPORT',
+    'end': 'END',
+}
 
+tokens = [
+    'STRING',
+    'PARTS',
+    'COLON',
+    'WIRE',
+    'COMMA',
+    'DOT',
+    'LEFTPAREN',
+    'RIGHTPAREN',
+    'ID',
+]+list(reserved.values())
+
+t_PARTS = r'parts'
 t_WIRE = r'-'
 t_DOT = r'\.'
+t_COLON = r'\:'
+t_COMMA = r','
 t_LEFTPAREN = r'\('
 t_RIGHTPAREN = r'\)'
+
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    foo = reserved.get(t.value, 'ID')
+    if foo != 'ID':
+        t.type = foo
+        return t
+    else:
+        t.type = 'STRING'
+        return t
 
 
 def t_STRING(t):
@@ -25,6 +47,7 @@ def t_STRING(t):
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
 
 t_ignore = ' \t'
 
@@ -42,6 +65,9 @@ lexer = lex.lex()
 if __name__ == '__main__':
     data = '''
     #test
+    parts A:
+        B,C
+    end
     A.B-C.D(10)
     '''
     lexer.input(data)
