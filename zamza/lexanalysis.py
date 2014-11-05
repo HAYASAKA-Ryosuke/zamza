@@ -3,22 +3,26 @@ import ply.lex as lex
 
 reserved = {
     'import': 'IMPORT',
+    'parts': 'PARTS',
     'end': 'END',
 }
 
 tokens = [
     'STRING',
-    'PARTS',
     'COLON',
     'WIRE',
     'COMMA',
     'DOT',
     'LEFTPAREN',
     'RIGHTPAREN',
+    'ENDCODE',
     'ID',
 ]+list(reserved.values())
 
-t_PARTS = r'parts'
+#t_IMPORT = r'import'
+#t_END = r'end'
+#t_PARTS = r'parts'
+t_ENDCODE = r'\;'
 t_WIRE = r'-'
 t_DOT = r'\.'
 t_COLON = r'\:'
@@ -49,7 +53,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 
-t_ignore = ' \t'
+t_ignore = ' \t\n'
 
 
 def t_error(t):
@@ -65,6 +69,7 @@ lexer = lex.lex()
 if __name__ == '__main__':
     data = '''
     #test
+    import C
     parts A:
         B,C
     end
