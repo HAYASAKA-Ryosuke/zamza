@@ -71,7 +71,7 @@ class Analysis(Parser):
 
     def p_expression_wire(self, p):
         'expression : term WIRE term'
-        p[0] = [p[1], p[3]]
+        p[0] = {'type': 'wire', 'list': [p[1], p[3]]}
 
     def p_term_dot(self, p):
         '''term : factor DOT factor'''
