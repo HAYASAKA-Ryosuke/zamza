@@ -1,48 +1,101 @@
 #!coding:utf-8
 import ply.yacc as yacc
-from lexanalysis import tokens
+import ply.lex as lex
 
 
-def p_expression_factor(p):
-    '''expression : factor'''
-    p[0] = {'type': 'stiring', 'name': p[1]}
+class Parser:
+    def __init__(self):
+        yacc.yacc(module=self)
+        lex.lex(module=self)
+
+    def text(self, val):
+        return yacc.parse(val)
 
 
-def p_expression_wire(p):
-    'expression : term WIRE term'
-    p[0] = [p[1], p[3]]
+class Analysis(Parser):
 
+    reserved = {
+        'import': 'IMPORT',
+        'parts': 'PARTS',
+        'end': 'END',
+    }
+    tokens = [
+        'STRING',
+        'COLON',
+        'WIRE',
+        'COMMA',
+        'DOT',
+        'LEFTPAREN',
+        'RIGHTPAREN',
+        'ENDCODE',
+        'ID',
+    ]+list(reserved.values())
+    t_ENDCODE = r'\;'
+    t_WIRE = r'-'
+    t_DOT = r'\.'
+    t_COLON = r'\:'
+    t_COMMA = r','
+    t_LEFTPAREN = r'\('
+    t_RIGHTPAREN = r'\)'
+    t_ignore = ' \t\n'
 
-def p_term_dot(p):
-    '''term : factor DOT factor'''
-    p[0] = {'name': p[1], 'pin': p[3]}
+    def t_ID(self, t):
+        r'[a-zA-Z_][a-zA-Z_0-9]*'
+        foo = self.reserved.get(t.value, 'ID')
+        if foo != 'ID':
+            t.type = foo
+            return t
+        else:
+            t.type = 'STRING'
+            return t
 
+    def t_STRING(self, t):
+        r'\w+'
+        t.value = str(t.value)
+        return t
 
-def p_term_end(p):
-    '''expression : END'''
-    p[0] = p[1]
+    def t_newline(self, t):
+        r'\n+'
+        t.lexer.lineno += len(t.value)
 
+    def t_error(self, t):
+        print("error '%s'" % t.value[0])
 
-def p_expression_import(p):
-    '''expression : IMPORT STRING'''
-    p[0] = {'type': 'import', 'name': p[2]}
+    def t_COMMENT(self, t):
+        r'\#.*'
+        pass
 
+    def p_expression_factor(self, p):
+        '''expression : factor'''
+        p[0] = {'type': 'stiring', 'name': p[1]}
 
-def p_expression_package(p):
-    '''expression : PARTS STRING COLON'''
-    p[0] = {'type': 'parts', 'name': p[2]}
+    def p_expression_wire(self, p):
+        'expression : term WIRE term'
+        p[0] = [p[1], p[3]]
 
+    def p_term_dot(self, p):
+        '''term : factor DOT factor'''
+        p[0] = {'name': p[1], 'pin': p[3]}
 
-def p_factor_string(p):
-    '''factor : STRING'''
-    p[0] = p[1]
-    print(p[0])
+    def p_term_end(self, p):
+        '''expression : END'''
+        p[0] = p[1]
 
+    def p_expression_import(self, p):
+        '''expression : IMPORT STRING'''
+        p[0] = {'type': 'import', 'name': p[2]}
 
-def p_error(p):
-    print("Syntax error")
+    def p_expression_package(self, p):
+        '''expression : PARTS STRING COLON'''
+        p[0] = {'type': 'parts', 'name': p[2]}
 
-parser = yacc.yacc()
+    def p_factor_string(self, p):
+        '''factor : STRING'''
+        p[0] = p[1]
+        print(p[0])
+
+    def p_error(self, p):
+        print("Syntax error")
 
 if __name__ == '__main__':
     data = '''
@@ -66,19 +119,20 @@ if __name__ == '__main__':
     '''
     data5 = '''
     A2.B - C2.D'''
-    result = parser.parse(data1)
-    result = parser.parse(data1)
+    parser = Analysis()
+    result = parser.text(data1)
+    result = parser.text(data1)
     if result['type'] == 'parts':
         print(result['name'])
-        result = parser.parse(data2)
+        result = parser.text(data2)
         print(result)
-        result = parser.parse(data3)
+        result = parser.text(data3)
         print(result)
-        result = parser.parse(data4)
+        result = parser.text(data4)
         print(result)
         if result != 'end':
             print('error')
-    result = parser.parse(data5)
+    result = parser.text(data5)
     print(result)
     #result = parser.parse(data3)
     #print(result)
