@@ -1,5 +1,6 @@
 #!coding:utf-8
 
+
 class ICDraw:
     topmargin = 20
     bottommargin = 20
@@ -29,7 +30,7 @@ class ICDraw:
         self.leftpinpos = []
         self.bottompinpos = []
         self.topictext = []
-        self.bottomictext =  []
+        self.bottomictext = []
         self.leftictext = []
         self.rightictext = []
 

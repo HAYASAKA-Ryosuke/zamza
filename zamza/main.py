@@ -1,5 +1,8 @@
-import Import
-import ICDraw
+#!coding:utf-8
+
+import sys
+import Analysis
+import DrawGraphics
 
 if __name__ == '__main__':
-    pass
+    filename = sys.argv[1]
