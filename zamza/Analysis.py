@@ -1,6 +1,7 @@
 #!coding:utf-8
 import ply.yacc as yacc
 import ply.lex as lex
+import string
 
 
 class Parser:
@@ -9,15 +10,17 @@ class Parser:
         lex.lex(module=self)
 
     def run(self, val):
-        for i in range(len(val.split('\n'))):
-            res = self.text(val.split('\n')[i])
+        val = val.strip()
+        shapeval = "".join(map(str, [x.replace(',', '\n') for x in val]))
+        for i in range(len(shapeval.split('\n'))):
+            res = self.text(shapeval.split('\n')[i])
             if res is not None:
                 if res['type'] == 'ic':
-                    self.fic(val.split('\n')[i:])
+                    self.fic(shapeval.split('\n')[i:])
                 if res['type'] == 'import':
-                    self.fimport(val.split('\n')[i:])
+                    self.fimport(shapeval.split('\n')[i:])
                 if res['type'] == 'main':
-                    self.fmain(val.split('\n')[i:])
+                    self.fmain(shapeval.split('\n')[i:])
 
     def text(self, val):
         return yacc.parse(val)
@@ -52,26 +55,25 @@ class Parser:
         top = None
 
         for i in range(1, len(val)):
-            res = self.text(val[i])
-            if res is not None:
-                if res['type'] == 'icleft':
-                    left = _direction(i, val)
-                    print('left')
-                    print(left)
-                elif res['type'] == 'icright':
-                    right = _direction(i, val)
-                    print('right')
-                    print(right)
-                elif res['type'] == 'icbottom':
-                    bottom = _direction(i, val)
-                    print('bottom')
-                    print(bottom)
-                elif res['type'] == 'ictop':
-                    top = _direction(i, val)
-                    print('top')
-                    print(top)
-            else:
-                print("e:"+val[i]+":e")
+            if val[i] != '':
+                res = self.text(val[i])
+                if res is not None:
+                    if res['type'] == 'icleft':
+                        left = _direction(i, val)
+                        print('left')
+                        print(left)
+                    elif res['type'] == 'icright':
+                        right = _direction(i, val)
+                        print('right')
+                        print(right)
+                    elif res['type'] == 'icbottom':
+                        bottom = _direction(i, val)
+                        print('bottom')
+                        print(bottom)
+                    elif res['type'] == 'ictop':
+                        top = _direction(i, val)
+                        print('top')
+                        print(top)
 
 
 class Analysis(Parser):
@@ -181,6 +183,7 @@ class Analysis(Parser):
         p[0] = p[1]
 
     def p_error(self, p):
+        print(p)
         print("Syntax error")
 
 if __name__ == '__main__':

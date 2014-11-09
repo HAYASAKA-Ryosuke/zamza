@@ -27,8 +27,7 @@ class Analysistest(unittest.TestCase):
             E
         end
         bottom:
-            F
-            G
+            F,G
         end
         top:
             H
