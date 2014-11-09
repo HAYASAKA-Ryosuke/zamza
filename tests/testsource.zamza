@@ -1,0 +1,20 @@
+ic A:
+left:
+    B
+    C
+end
+right:
+    D
+    E
+end
+bottom:
+    F,G
+end
+top:
+    H
+    I
+end
+end
+main:
+    A.H-A.F
+end
