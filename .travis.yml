@@ -7,7 +7,7 @@ branches:
         - master
 
 install:
-    - pip install ply,networkx
+    - pip install ply
     - pip install networkx
     - pip install pillow
 script:
