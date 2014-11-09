@@ -39,6 +39,7 @@ class Analysistest(unittest.TestCase):
         end
         '''
         self.analysis.run(data)
+        self.assertEqual(self.analysis.icinfo, [{'left': [{'name': 'B', 'type': 'string'}, {'name': 'C', 'type': 'string'}], 'icname': 'A', 'bottom': [{'name': 'F', 'type': 'string'}, {'name': 'G', 'type': 'string'}], 'right': [{'name': 'D', 'type': 'string'}, {'name': 'E', 'type': 'string'}], 'top': [{'name': 'H', 'type': 'string'}, {'name': 'I', 'type': 'string'}]}])
 
 
 if __name__ == '__main__':

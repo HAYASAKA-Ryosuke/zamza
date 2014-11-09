@@ -1,13 +1,13 @@
 #!coding:utf-8
 import ply.yacc as yacc
 import ply.lex as lex
-import string
 
 
 class Parser:
     def __init__(self):
         yacc.yacc(module=self)
         lex.lex(module=self)
+        self.icinfo = []
 
     def run(self, val):
         val = val.strip()
@@ -16,7 +16,7 @@ class Parser:
             res = self.text(shapeval.split('\n')[i])
             if res is not None:
                 if res['type'] == 'ic':
-                    self.fic(shapeval.split('\n')[i:])
+                    self.icinfo.append(self.fic(shapeval.split('\n')[i:]))
                 if res['type'] == 'import':
                     self.fimport(shapeval.split('\n')[i:])
                 if res['type'] == 'main':
@@ -53,6 +53,7 @@ class Parser:
         right = None
         bottom = None
         top = None
+        name = self.text(val[0])['name']
 
         for i in range(1, len(val)):
             if val[i] != '':
@@ -60,20 +61,13 @@ class Parser:
                 if res is not None:
                     if res['type'] == 'icleft':
                         left = _direction(i, val)
-                        print('left')
-                        print(left)
                     elif res['type'] == 'icright':
                         right = _direction(i, val)
-                        print('right')
-                        print(right)
                     elif res['type'] == 'icbottom':
                         bottom = _direction(i, val)
-                        print('bottom')
-                        print(bottom)
                     elif res['type'] == 'ictop':
                         top = _direction(i, val)
-                        print('top')
-                        print(top)
+        return {'icname': name, 'top': top, 'right': right, 'left': left, 'bottom': bottom}
 
 
 class Analysis(Parser):
