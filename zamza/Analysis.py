@@ -8,6 +8,7 @@ class Parser:
         yacc.yacc(module=self)
         lex.lex(module=self)
         self.icinfo = []
+        self.maininfo = []
 
     def run(self, val):
         val = val.strip()
@@ -20,35 +21,30 @@ class Parser:
                 if res['type'] == 'import':
                     self.fimport(shapeval.split('\n')[i:])
                 if res['type'] == 'main':
-                    self.fmain(shapeval.split('\n')[i:])
+                    self.maininfo.extend(self.fmain(shapeval.split('\n')[i:]))
 
     def text(self, val):
         return yacc.parse(val)
 
-    def connmas(self, val):
-        def _reader():
-            yield val.split(",")
-        return [i for i in _reader()]
-
     def fmain(self, val):
-        print()
-        pass
+        return self._direction(0, val)
 
     def fimport(self, val):
         pass
 
+    def _direction(self, i, val):
+        reslist = []
+        j = i+1
+        while True:
+            res = self.text(val[j])
+            if res is not None:
+                if res['type'] == 'END':
+                    return reslist
+                else:
+                    reslist.append(res)
+                    j += 1
+
     def fic(self, val):
-        def _direction(i, val):
-            reslist = []
-            j = i+1
-            while True:
-                res = self.text(val[j])
-                if res is not None:
-                    if res['type'] == 'END':
-                        return reslist
-                    else:
-                        reslist.append(res)
-                        j += 1
         left = None
         right = None
         bottom = None
@@ -60,13 +56,13 @@ class Parser:
                 res = self.text(val[i])
                 if res is not None:
                     if res['type'] == 'icleft':
-                        left = _direction(i, val)
+                        left = self._direction(i, val)
                     elif res['type'] == 'icright':
-                        right = _direction(i, val)
+                        right = self._direction(i, val)
                     elif res['type'] == 'icbottom':
-                        bottom = _direction(i, val)
+                        bottom = self._direction(i, val)
                     elif res['type'] == 'ictop':
-                        top = _direction(i, val)
+                        top = self._direction(i, val)
         return {'icname': name, 'top': top, 'right': right, 'left': left, 'bottom': bottom}
 
 
