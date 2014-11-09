@@ -7,7 +7,7 @@ branches:
         - master
 
 install:
-    - travis_retry pip install pillow, ply, networkx
+    - travis_retry pip install ply
 script:
     - python ./tests/Analysis_test.py
     - python ./tests/DrawGraphics.py
