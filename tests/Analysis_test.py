@@ -40,7 +40,7 @@ class Analysistest(unittest.TestCase):
         end
         '''
         self.analysis.run(data)
-        self.assertEqual(self.analysis.icinfo, [{'left': [{'name': 'B', 'type': 'string'}, {'name': 'C', 'type': 'string'}], 'icname': 'A', 'bottom': [{'name': 'F', 'type': 'string'}, {'name': 'G', 'type': 'string'}], 'right': [{'name': 'D', 'type': 'string'}, {'name': 'E', 'type': 'string'}], 'top': [{'name': 'H', 'type': 'string'}, {'name': 'I', 'type': 'string'}]}])
+        self.assertEqual(self.analysis.icinfo, [{'rightlen': 2,'leftlen': 2,'bottomlen': 2,'toplen': 2,'left': [{'name': 'B', 'type': 'string'}, {'name': 'C', 'type': 'string'}], 'icname': 'A', 'bottom': [{'name': 'F', 'type': 'string'}, {'name': 'G', 'type': 'string'}], 'right': [{'name': 'D', 'type': 'string'}, {'name': 'E', 'type': 'string'}], 'top': [{'name': 'H', 'type': 'string'}, {'name': 'I', 'type': 'string'}]}])
         self.assertEqual(self.analysis.maininfo, [{'list': [{'name': 'A', 'pin': 'B'}, {'name': 'A', 'pin': 'C'}], 'type': 'wire'}, {'list': [{'name': 'A', 'pin': 'D'}, {'name': 'A', 'pin': 'I'}], 'type': 'wire'}])
 
 

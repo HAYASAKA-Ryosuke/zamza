@@ -20,6 +20,5 @@ class testLineDraw(unittest.TestCase):
         print(self.linedraw.gridgraph([10, 50], [360, 300]))
 
 
-
 if __name__ == '__main__':
     unittest.main()

@@ -63,7 +63,7 @@ class Parser:
                         bottom = self._direction(i, val)
                     elif res['type'] == 'ictop':
                         top = self._direction(i, val)
-        return {'icname': name, 'top': top, 'right': right, 'left': left, 'bottom': bottom}
+        return {'icname': name, 'top': top, 'toplen': len(top), 'right': right,'rightlen': len(right), 'left': left, 'leftlen': len(left), 'bottom': bottom,'bottomlen': len(bottom)}
 
 
 class Analysis(Parser):
