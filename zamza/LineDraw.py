@@ -13,8 +13,8 @@ class Linedraw(object):
         self.nx = networkx
         self.graph = self.nx.DiGraph()
 
-    def linedraw(self, linelist):
-        self.drawline.line(linelist)
+    def linedraw(self, linelist, linecolor='black'):
+        self.drawline.line(linelist,fill=linecolor)
 
     def gridgraph(self, start=[], stop=[]):
         gridlist = self.gridnumlist(start,stop)

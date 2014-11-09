@@ -41,27 +41,27 @@ class ICDraw:
         self.width = max(top, bottom) * self.pinmargin + max(top, bottom) * self.fontsize + self.widthmargin
         self.height = max(left, right) * self.pinmargin + max(left, right) * self.fontsize + self.heightmargin
 
-    def ICdraw(self, x, y, pincolor='red'):
+    def ICdraw(self, x, y, pincolor='red', textcolor='black'):
         fontsize = self.fontsize
         self.__contour(x=x, y=y, width=self.width, height=self.height)
         for i, text in enumerate(self.topictext):
             pos = (x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y)
-            self.drawline.text(pos, str(text), font=self.font)
+            self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
             self.drawline.line(((pos[0], pos[1]), (pos[0], pos[1]-self.pinlength)),fill=pincolor) # pin
             self.toppinpos.append(pos)
         for i, text in enumerate(self.leftictext):
             pos = (x-self.pinlength, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2)
-            self.drawline.text(pos, str(text), font=self.font)
+            self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
             self.drawline.line(((pos[0], pos[1]), (pos[0]+self.pinlength, pos[1])),fill=pincolor)
             self.leftpinpos.append(pos)
         for i, text in enumerate(self.bottomictext):
             pos = (x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y+self.height+self.pinlength)
-            self.drawline.text(pos, str(text), font=self.font)
+            self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
             self.drawline.line(((pos[0], pos[1]), (pos[0], pos[1]-self.pinlength)),fill=pincolor)
             self.bottompinpos.append(pos)
         for i, text in enumerate(self.rightictext):
             pos = (x+self.width+self.pinlength, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2+self.pinlength)
-            self.drawline.text(pos, str(text), font=self.font)
+            self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
             self.drawline.line(((pos[0]-self.pinlength, pos[1]), (pos[0], pos[1])),fill=pincolor)
             self.rightpinpos.append(pos)
 
