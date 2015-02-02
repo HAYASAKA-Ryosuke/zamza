@@ -31,27 +31,24 @@ class Linedraw(object):
                     self.graph.add_edge(gridlist[i][j], gridlist[i + 1][j], weight=1)
                 elif i == ylast:
                     if j < xlast:
-                        self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
+                        self.graph.add_edge(gridlist[i][j], gridlist[i][j + 1], weight=1)
                 else:
                     if i < ylast:
-                        self.graph.add_edge(gridlist[i][j], gridlist[i+1][j],weight=1)
-                    self.graph.add_edge(gridlist[i][j], gridlist[i-1][j],weight=1)
+                        self.graph.add_edge(gridlist[i][j], gridlist[i + 1][j], weight=1)
+                    self.graph.add_edge(gridlist[i][j], gridlist[i - 1][j], weight=1)
                     if j < xlast:
-                        self.graph.add_edge(gridlist[i][j], gridlist[i][j+1],weight=1)
-                    self.graph.add_edge(gridlist[i][j], gridlist[i][j-1],weight=1)
-        return [p for p in self.nx.all_shortest_paths(self.graph,tuple(start),tuple(stop))]
+                        self.graph.add_edge(gridlist[i][j], gridlist[i][j + 1], weight=1)
+                    self.graph.add_edge(gridlist[i][j], gridlist[i][j - 1], weight=1)
+        return [p for p in self.nx.all_shortest_paths(self.graph, tuple(start), tuple(stop))]
 
     def _gridnum(self, xsmall, ysmall, xlarge, ylarge):
 
-        def create_pos(x, y):
-            return (xsmall + (self.space * x), ysmall + (self.space * y),)
+        pos = lambda x, y: (xsmall + (self.space * x), ysmall + (self.space * y),)
+        interval_space = lambda pixel: round(pixel / self.space) + 1
 
-        def gridseparatenum(pixel):
-            """gridをどの間隔で空けるか"""
-            return round(pixel / self.space) + 1
-        yseparate = gridseparatenum(ylarge - ysmall)
-        xseparate = gridseparatenum(xlarge - xsmall)
-        return [[create_pos(j, i) for j in range(xseparate)] for i in range(yseparate)]
+        yseparate = interval_space(ylarge - ysmall)
+        xseparate = interval_space(xlarge - xsmall)
+        return [[pos(j, i) for j in range(xseparate)] for i in range(yseparate)]
 
     def gridnumlist(self, start=[], stop=[]):
         if start[0] <= stop[0] and start[1] < stop[1]:
