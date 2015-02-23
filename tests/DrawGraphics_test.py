@@ -39,6 +39,7 @@ class testDrawGraphics(unittest.TestCase):
         self.assertEqual(("bottom", 4, (420, 510)), self.ic.ICgetpinpos("IC2", "p22"))
 
     def test_LineDraw(self):
+        print(self.ic.ICDrawArea("IC2"))
         self.ic.linedraw(self.ic.gridgraph(self.ic.ICgetpinpos("IC1", "p9")[2], self.ic.ICgetpinpos("IC2", "p2")[2])[0])
         self.ic.linedraw(self.ic.gridgraph(self.ic.ICgetpinpos("IC1", "p12")[2], self.ic.ICgetpinpos("IC2", "p18")[2])[0])
         self.ic.linedraw(self.ic.gridgraph(self.ic.ICgetpinpos("IC1", "p15")[2], self.ic.ICgetpinpos("IC2", "p3")[2])[0])

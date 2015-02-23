@@ -35,7 +35,7 @@ class ICDraw:
         self.rightictext = []
 
     def __contour(self, x, y, width, height, color='black'):
-        self.drawline.line(((x, y), (x, y+height), (x+width, y+height), (x+width, y), (x, y)), fill=color, width=2)
+        self.drawline.line(((x, y), (x, y + height), (x + width, y + height), (x + width, y), (x, y)), fill=color, width=2)
 
     def ICpin(self, top=0, left=0, bottom=0, right=0):
         self.width = max(top, bottom) * self.pinmargin + max(top, bottom) * self.fontsize + self.widthmargin
@@ -45,25 +45,31 @@ class ICDraw:
         fontsize = self.fontsize
         self.__contour(x=x, y=y, width=self.width, height=self.height)
         for i, text in enumerate(self.topictext):
-            pos = (x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y)
+            pos = (x + (i * self.pinmargin) + (i * fontsize) + self.widthmargin // 2, y)
             self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
-            self.drawline.line(((pos[0], pos[1]), (pos[0], pos[1]-self.pinlength)),fill=pincolor) # pin
+            self.drawline.line(((pos[0], pos[1]), (pos[0], pos[1] - self.pinlength)), fill=pincolor)
             self.toppinpos.append(pos)
         for i, text in enumerate(self.leftictext):
-            pos = (x-self.pinlength, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2)
+            pos = (x - self.pinlength, y + (i * self.pinmargin) + (i * fontsize) + self.heightmargin // 2)
             self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
-            self.drawline.line(((pos[0], pos[1]), (pos[0]+self.pinlength, pos[1])),fill=pincolor)
+            self.drawline.line(((pos[0], pos[1]), (pos[0] + self.pinlength, pos[1])), fill=pincolor)
             self.leftpinpos.append(pos)
         for i, text in enumerate(self.bottomictext):
-            pos = (x+(i*self.pinmargin)+(i*fontsize)+self.widthmargin//2, y+self.height+self.pinlength)
+            pos = (x + (i * self.pinmargin) + (i * fontsize) + self.widthmargin // 2, y + self.height + self.pinlength)
             self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
-            self.drawline.line(((pos[0], pos[1]), (pos[0], pos[1]-self.pinlength)),fill=pincolor)
+            self.drawline.line(((pos[0], pos[1]), (pos[0], pos[1] - self.pinlength)), fill=pincolor)
             self.bottompinpos.append(pos)
         for i, text in enumerate(self.rightictext):
-            pos = (x+self.width+self.pinlength, y+(i*self.pinmargin)+(i*fontsize)+self.heightmargin//2+self.pinlength)
+            pos = (x + self.width + self.pinlength, y + (i * self.pinmargin) + (i * fontsize) + self.heightmargin // 2 + self.pinlength)
             self.drawline.text(pos, str(text), font=self.font, fill=textcolor)
-            self.drawline.line(((pos[0]-self.pinlength, pos[1]), (pos[0], pos[1])),fill=pincolor)
+            self.drawline.line(((pos[0] - self.pinlength, pos[1]), (pos[0], pos[1])), fill=pincolor)
             self.rightpinpos.append(pos)
+
+    def ICDrawArea(self, icname):
+        """描画禁止エリア"""
+        """ダメな位置を返すようにする"""
+        print(self.icname[icname]['leftpin'][0])
+        print(self.icname[icname]['rightpin'][0])
 
     def ICgetpinpos(self, icname, pinname):
         if pinname in self.icname[icname]["toppin"]:

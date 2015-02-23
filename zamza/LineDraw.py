@@ -18,6 +18,7 @@ class Linedraw(object):
         self.drawline.line(linelist, fill=linecolor)
 
     def _add_edge(self, gridlist, i, j, com):
+        """決められた方向にエッジを追加する"""
         if com == 'y_up':
             self.graph.add_edge(gridlist[i][j], gridlist[i][j - 1], weight=1)
         if com == 'y_down':
@@ -28,6 +29,7 @@ class Linedraw(object):
             self.graph.add_edge(gridlist[i][j], gridlist[i - 1][j], weight=1)
 
     def _grid_if(self, gridlist, i, j, xlast, ylast):
+        """どの方向にグリッドを引くかを決める"""
         self.graph.add_node(gridlist[i][j])
         if i == 0:
             if j < xlast:
