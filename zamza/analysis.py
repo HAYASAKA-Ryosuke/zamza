@@ -51,13 +51,13 @@ class Parser:
                 res = code.split('\n')[i]
                 if res == '':
                     continue
-                if self.text(res) is not None:
-                    if res['type'] == 'ic':
-                        self.ic_info.append(self.fic(code.split('\n')[i:]))
-                    if res['type'] == 'import':
-                        self.fimport(code.split('\n')[i:])
-                    if res['type'] == 'main':
-                        self.main_info.extend(self.fmain(code.split('\n')[i:]))
+                res = self.text(res)
+                if res['type'] == 'ic':
+                    self.ic_info.append(self.fic(code.split('\n')[i:]))
+                if res['type'] == 'import':
+                    self.fimport(code.split('\n')[i:])
+                if res['type'] == 'main':
+                    self.main_info.extend(self.fmain(code.split('\n')[i:]))
         #for code in self._main_separate(shapeval):
         #    for i in range(len(code.split('\n'))):
         #        res = self.text(code.split('\n')[i])
