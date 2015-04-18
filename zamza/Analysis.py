@@ -7,8 +7,8 @@ class Parser:
     def __init__(self):
         yacc.yacc(module=self)
         lex.lex(module=self)
-        self.icinfo = []
-        self.maininfo = []
+        self.ic_info = []
+        self.main_info = []
 
     def run(self, val):
         val = val.strip()
@@ -17,11 +17,11 @@ class Parser:
             res = self.text(shapeval.split('\n')[i])
             if res is not None:
                 if res['type'] == 'ic':
-                    self.icinfo.append(self.fic(shapeval.split('\n')[i:]))
+                    self.ic_info.append(self.fic(shapeval.split('\n')[i:]))
                 if res['type'] == 'import':
                     self.fimport(shapeval.split('\n')[i:])
                 if res['type'] == 'main':
-                    self.maininfo.extend(self.fmain(shapeval.split('\n')[i:]))
+                    self.main_info.extend(self.fmain(shapeval.split('\n')[i:]))
 
     def text(self, val):
         return yacc.parse(val)
@@ -34,7 +34,7 @@ class Parser:
 
     def _direction(self, i, val):
         reslist = []
-        j = i+1
+        j = i + 1
         while True:
             res = self.text(val[j])
             if res is not None:
@@ -63,7 +63,7 @@ class Parser:
                         bottom = self._direction(i, val)
                     elif res['type'] == 'ictop':
                         top = self._direction(i, val)
-        return {'icname': name, 'top': top, 'toplen': len(top), 'right': right,'rightlen': len(right), 'left': left, 'leftlen': len(left), 'bottom': bottom,'bottomlen': len(bottom)}
+        return {'ic_name': name, 'top': top, 'toplen': len(top), 'right': right, 'rightlen': len(right), 'left': left, 'leftlen': len(left), 'bottom': bottom, 'bottomlen': len(bottom)}
 
 
 class Analysis(Parser):
@@ -88,7 +88,7 @@ class Analysis(Parser):
         'RIGHTPAREN',
         'ENDCODE',
         'ID',
-    ]+list(reserved.values())
+    ] + list(reserved.values())
     t_ENDCODE = r'\;'
     t_WIRE = r'-'
     t_DOT = r'\.'
