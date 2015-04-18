@@ -24,9 +24,8 @@ class IC:
         self.right_ic_text = []
 
     def name(self, name):
-        """icに名前をつけるとそのICの幅，高さ，ピンの位置"""
-        print(self.right_ic_text)
-        self.ic_name[name] = {"width": self.width, "height": self.height, "top_pin": list(self.top_ic_text), "left_pin": list(self.left_ic_text), "right_pin": list(self.right_ic_text), "bottom_pin": list(self.bottom_ic_text), "top_pin_pos": list(self.top_pin_pos), "left_pin_pos": list(self.left_pin_pos), "rightpin_pos": list(self.right_pin_pos), "bottom_pin_pos": list(self.bottom_pin_pos)}
+        """icに名前をつけるとそのICの幅，高さ，それぞれのピンの位置, それぞれのピンの名前"""
+        self.ic_name[name] = {"width": self.width, "height": self.height, "top_pin": list(self.top_ic_text), "left_pin": list(self.left_ic_text), "right_pin": list(self.right_ic_text), "bottom_pin": list(self.bottom_ic_text), "top_pin_pos": list(self.top_pin_pos), "left_pin_pos": list(self.left_pin_pos), "right_pin_pos": list(self.right_pin_pos), "bottom_pin_pos": list(self.bottom_pin_pos)}
         self.top_pin_pos = []
         self.right_pin_pos = []
         self.left_pin_pos = []
