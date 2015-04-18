@@ -56,10 +56,6 @@ class Parser:
                         self.fimport(code.split('\n')[i:])
                     if res['type'] == 'main':
                         self.main_info.extend(self.fmain(code.split('\n')[i:]))
-        #for code in self._main_separate(shapeval):
-        #    for i in range(len(code.split('\n'))):
-        #        res = self.text(code.split('\n')[i])
-        #        if res is not None:
 
     def text(self, val):
         return yacc.parse(val)
