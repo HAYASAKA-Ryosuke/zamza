@@ -55,15 +55,15 @@ class Parser:
             if val[i] != '':
                 res = self.text(val[i])
                 if res is not None:
-                    if res['type'] == 'icleft':
+                    if res['type'] == 'ic_left':
                         left = self._direction(i, val)
-                    elif res['type'] == 'icright':
+                    elif res['type'] == 'ic_right':
                         right = self._direction(i, val)
-                    elif res['type'] == 'icbottom':
+                    elif res['type'] == 'ic_bottom':
                         bottom = self._direction(i, val)
-                    elif res['type'] == 'ictop':
+                    elif res['type'] == 'ic_top':
                         top = self._direction(i, val)
-        return {'ic_name': name, 'top': top, 'toplen': len(top), 'right': right, 'rightlen': len(right), 'left': left, 'leftlen': len(left), 'bottom': bottom, 'bottomlen': len(bottom)}
+        return {'ic_name': name, 'top': top, 'top_len': len(top), 'right': right, 'right_len': len(right), 'left': left, 'left_len': len(left), 'bottom': bottom, 'bottom_len': len(bottom)}
 
 
 class Analysis(Parser):
@@ -154,19 +154,19 @@ class Analysis(Parser):
 
     def p_expression_left(self, p):
         '''expression : LEFT COLON'''
-        p[0] = {'type': 'icleft', 'name': p[2]}
+        p[0] = {'type': 'ic_left', 'name': p[2]}
 
     def p_expression_right(self, p):
         '''expression : RIGHT COLON'''
-        p[0] = {'type': 'icright', 'name': p[2]}
+        p[0] = {'type': 'ic_right', 'name': p[2]}
 
     def p_expression_bottom(self, p):
         '''expression : BOTTOM COLON'''
-        p[0] = {'type': 'icbottom', 'name': p[2]}
+        p[0] = {'type': 'ic_bottom', 'name': p[2]}
 
     def p_expression_top(self, p):
         '''expression : TOP COLON'''
-        p[0] = {'type': 'ictop', 'name': p[2]}
+        p[0] = {'type': 'ic_top', 'name': p[2]}
 
     def p_factor_string(self, p):
         '''factor : STRING'''

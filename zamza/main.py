@@ -11,11 +11,11 @@ if __name__ == '__main__':
     ic = draw_graphics.Draw()
     analysis.run(sourcecode)
     for i in analysis.ic_info:
-        toplen = i['toplen']
-        bottomlen = i['bottomlen']
-        leftlen = i['leftlen']
-        rightlen = i['rightlen']
-        ic.pin(top=toplen, bottom=bottomlen, left=leftlen, right=rightlen)
+        top_len = i['top_len']
+        bottom_len = i['bottom_len']
+        left_len = i['left_len']
+        right_len = i['right_len']
+        ic.pin(top=top_len, bottom=bottom_len, left=left_len, right=right_len)
         top = list(map(lambda s: s['name'], i['top']))
         bottom = list(map(lambda s: s['name'], i['bottom']))
         left = list(map(lambda s: s['name'], i['left']))
