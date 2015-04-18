@@ -48,8 +48,10 @@ class Parser:
         print(source_code)
         for code in source_code:
             for i in range(len(code.split('\n'))):
-                res = self.text(code.split('\n')[i])
-                if res is not None:
+                res = code.split('\n')[i]
+                if res == '':
+                    continue
+                if self.text(res) is not None:
                     if res['type'] == 'ic':
                         self.ic_info.append(self.fic(code.split('\n')[i:]))
                     if res['type'] == 'import':
