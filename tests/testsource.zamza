@@ -1,20 +1,38 @@
-ic A:
-left:
-    B
-    C
+ic AIC:
+    left:
+        B
+        C
+    end
+    right:
+        D
+        E
+    end
+    bottom:
+        F,G
+    end
+    top:
+        H
+        I
+    end
 end
-right:
-    D
-    E
-end
-bottom:
-    F,G
-end
-top:
-    H
-    I
-end
+
+ic BIC:
+    left:
+        p1
+        p2
+    end
+    right:
+        p3
+        p4
+    end
+    bottom:
+        p5,p6
+    end
+    top:
+        H
+        I
+    end
 end
 main:
-    A.H-A.F
+    BIC.p5-AIC.H
 end

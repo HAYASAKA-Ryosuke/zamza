@@ -48,11 +48,11 @@ class LineDraw(object):
 
     def grid_graph(self, start=[], stop=[]):
         grid_list = self.grid_num_list(start, stop)
-        xlast = len(grid_list[0]) - 1
-        ylast = len(grid_list) - 1
+        x_last = len(grid_list[0]) - 1
+        y_last = len(grid_list) - 1
         # for i in range(ylast + 1):
         #     for j in range(xlast + 1):
-        [self._grid_if(grid_list, i, j, xlast, ylast) for j in range(xlast + 1) for i in range(ylast + 1)]
+        [self._grid_if(grid_list, i, j, x_last, y_last) for j in range(x_last + 1) for i in range(y_last + 1)]
         return [p for p in self.nx.all_shortest_paths(self.graph, tuple(start), tuple(stop))]
 
     def _grid_num(self, xsmall, ysmall, xlarge, ylarge):

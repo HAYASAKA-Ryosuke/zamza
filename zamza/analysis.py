@@ -10,18 +10,56 @@ class Parser:
         self.ic_info = []
         self.main_info = []
 
+    def _main_separate(self, code):
+        text = ""
+        main_line = False
+        for code_line in code.split('\n'):
+            if "end" in code_line and main_line:
+                text += code_line + '\n'
+                return text
+            elif "main:" in code_line:
+                main_line = True
+                text += code_line + '\n'
+            elif main_line:
+                text += code_line + '\n'
+
+    def _ic_separate(self, code):
+        text = ""
+        res = []
+        end_line = False
+        for code_line in code.split('\n'):
+            if "end" in code_line:
+                end_line = True
+            if "ic" in code_line and ":" in code_line and end_line:
+                res.append(text)
+                text = code_line + '\n'
+                end_line = False
+            elif "main:" in code_line:
+                res.append(text)
+            else:
+                text += code_line + '\n'
+        return res
+
     def run(self, val):
         val = val.strip()
         shapeval = "".join(map(str, [x.replace(',', '\n') for x in val]))
-        for i in range(len(shapeval.split('\n'))):
-            res = self.text(shapeval.split('\n')[i])
-            if res is not None:
-                if res['type'] == 'ic':
-                    self.ic_info.append(self.fic(shapeval.split('\n')[i:]))
-                if res['type'] == 'import':
-                    self.fimport(shapeval.split('\n')[i:])
-                if res['type'] == 'main':
-                    self.main_info.extend(self.fmain(shapeval.split('\n')[i:]))
+        source_code = self._ic_separate(shapeval)
+        source_code.extend([self._main_separate(shapeval)])
+        print(source_code)
+        for code in source_code:
+            for i in range(len(code.split('\n'))):
+                res = self.text(code.split('\n')[i])
+                if res is not None:
+                    if res['type'] == 'ic':
+                        self.ic_info.append(self.fic(code.split('\n')[i:]))
+                    if res['type'] == 'import':
+                        self.fimport(code.split('\n')[i:])
+                    if res['type'] == 'main':
+                        self.main_info.extend(self.fmain(code.split('\n')[i:]))
+        #for code in self._main_separate(shapeval):
+        #    for i in range(len(code.split('\n'))):
+        #        res = self.text(code.split('\n')[i])
+        #        if res is not None:
 
     def text(self, val):
         return yacc.parse(val)

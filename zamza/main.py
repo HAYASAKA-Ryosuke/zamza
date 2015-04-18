@@ -6,11 +6,13 @@ import draw_graphics
 
 if __name__ == '__main__':
     filename = sys.argv[1]
+    ic_pos = [(int(sys.argv[2].split(',')[0]), int(sys.argv[2].split(',')[1]))]
+    ic_pos.append((int(sys.argv[3].split(',')[0]), int(sys.argv[3].split(',')[1])))
     sourcecode = open(filename, 'r').read()
     analysis = analysis.Analysis()
     ic = draw_graphics.Draw()
     analysis.run(sourcecode)
-    for i in analysis.ic_info:
+    for count, i in enumerate(analysis.ic_info):
         top_len = i['top_len']
         bottom_len = i['bottom_len']
         left_len = i['left_len']
@@ -21,7 +23,7 @@ if __name__ == '__main__':
         left = list(map(lambda s: s['name'], i['left']))
         right = list(map(lambda s: s['name'], i['right']))
         ic.text(top=top, bottom=bottom, left=left, right=right)
-        ic.draw(300, 300)
+        ic.draw(ic_pos[count][0], ic_pos[count][1])
         ic.name(i['ic_name'])
 
     for i in analysis.main_info:
