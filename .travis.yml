@@ -13,3 +13,4 @@ install:
 script:
     - python ./tests/Analysis_test.py
     - python ./tests/DrawGraphics_test.py
+    - python ./zamza/main.py ./tests/testsource.zamza 300,400 100,200
