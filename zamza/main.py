@@ -1,13 +1,13 @@
 #!coding:utf-8
 
 import sys
-import Analysis
+import analysis
 import draw_graphics
 
 if __name__ == '__main__':
     filename = sys.argv[1]
     sourcecode = open(filename, 'r').read()
-    analysis = Analysis.Analysis()
+    analysis = analysis.Analysis()
     ic = draw_graphics.Draw()
     analysis.run(sourcecode)
     for i in analysis.ic_info:
